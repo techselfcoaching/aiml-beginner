@@ -13,14 +13,20 @@ conversation_history_claude = []
 # OpenAI client
 client = OpenAI(api_key=OPENAI_API_KEY)
 
-# ====== GPT Chat function ======
+# ====== GPT Chat function (optimized for cheapest usage) ======
 def chat_with_gpt(user_input):
     global conversation_history_gpt
     conversation_history_gpt.append({"role": "user", "content": user_input})
 
+    # Keep only the last 10 exchanges to save cost
+    MAX_HISTORY = 5  # user+assistant counts as 2 messages each
+    conversation_history_gpt = conversation_history_gpt[-MAX_HISTORY:]
+
     response = client.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=conversation_history_gpt
+        model="gpt-4.1-mini",   # cheaper & smarter than gpt-3.5-turbo
+        messages=conversation_history_gpt,
+        max_tokens=500,         # cap output length
+        temperature=0.7
     )
     assistant_message = response.choices[0].message.content
     conversation_history_gpt.append({"role": "assistant", "content": assistant_message})
