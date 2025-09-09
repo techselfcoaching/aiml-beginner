@@ -1,0 +1,150 @@
+[
+    {
+        "employee_id": "EMP001",
+        "name": "Sarah Johnson",
+        "department": "Engineering",
+        "position": "Senior Software Engineer",
+        "hire_date": "2020-03-15",
+        "salary": 125000,
+        "performance_rating": "Exceeds Expectations",
+        "skills": ["Python", "Machine Learning", "AWS", "Docker"],
+        "projects": [
+            "AI Customer Support System (2024)",
+            "Cloud Migration Project (2023)",
+            "Mobile App Backend (2022)"
+        ],
+        "manager": "Mike Chen",
+        "location": "San Francisco",
+        "certifications": ["AWS Solutions Architect", "Kubernetes Administrator"],
+        "training_completed": [
+            "Advanced Python Programming (2024)",
+            "Leadership Skills Workshop (2023)",
+            "Security Best Practices (2024)"
+        ],
+        "last_promotion": "2023-01-15",
+        "notes": "Top performer, excellent technical leadership, mentors junior developers"
+    },
+    {
+        "employee_id": "EMP002", 
+        "name": "Marcus Rodriguez",
+        "department": "Marketing",
+        "position": "Digital Marketing Manager",
+        "hire_date": "2021-07-20",
+        "salary": 85000,
+        "performance_rating": "Meets Expectations",
+        "skills": ["SEO", "Google Analytics", "Social Media Marketing", "Content Strategy"],
+        "projects": [
+            "Brand Awareness Campaign 2024",
+            "Product Launch Strategy (2023)",
+            "Customer Acquisition Optimization (2024)"
+        ],
+        "manager": "Lisa Park",
+        "location": "New York",
+        "certifications": ["Google Ads Certified", "HubSpot Marketing"],
+        "training_completed": [
+            "Advanced Analytics (2024)",
+            "Creative Thinking Workshop (2023)"
+        ],
+        "last_promotion": "2022-12-01",
+        "notes": "Creative strategist, strong analytical skills, improved conversion rates by 35%"
+    },
+    {
+        "employee_id": "EMP003",
+        "name": "Dr. Emily Watson",
+        "department": "Research & Development", 
+        "position": "Principal Research Scientist",
+        "hire_date": "2019-09-10",
+        "salary": 165000,
+        "performance_rating": "Outstanding",
+        "skills": ["Data Science", "Statistical Analysis", "R", "TensorFlow", "Research Methodology"],
+        "projects": [
+            "Predictive Analytics Platform (2024)",
+            "Customer Behavior Analysis (2023)",
+            "AI Ethics Framework Development (2024)"
+        ],
+        "manager": "David Kim",
+        "location": "Boston",
+        "certifications": ["PhD in Data Science", "Certified Analytics Professional"],
+        "training_completed": [
+            "Advanced Machine Learning (2024)",
+            "Ethics in AI (2024)",
+            "Patent Writing Workshop (2023)"
+        ],
+        "last_promotion": "2023-06-01",
+        "notes": "Published 5 research papers, leads innovation initiatives, patent holder"
+    },
+    {
+        "employee_id": "EMP004",
+        "name": "Alex Thompson",
+        "department": "Sales",
+        "position": "Senior Sales Representative",
+        "hire_date": "2022-01-10",
+        "salary": 75000,
+        "performance_rating": "Exceeds Expectations",
+        "skills": ["Salesforce", "Negotiation", "Client Relations", "CRM Management"],
+        "projects": [
+            "Enterprise Client Acquisition (2024)",
+            "Sales Process Optimization (2023)",
+            "Customer Retention Program (2024)"
+        ],
+        "manager": "Jennifer Adams",
+        "location": "Chicago",
+        "certifications": ["Salesforce Certified Administrator", "Professional Sales Certificate"],
+        "training_completed": [
+            "Advanced Negotiation Techniques (2024)",
+            "Customer Psychology (2023)",
+            "Sales Leadership Program (2024)"
+        ],
+        "last_promotion": "2023-08-15",
+        "notes": "Exceeded sales targets by 150% in 2024, excellent client relationship management"
+    },
+    {
+        "employee_id": "EMP005",
+        "name": "Maria Gonzalez",
+        "department": "Human Resources",
+        "position": "HR Business Partner",
+        "hire_date": "2019-11-25",
+        "salary": 95000,
+        "performance_rating": "Outstanding",
+        "skills": ["Employee Relations", "Talent Acquisition", "Performance Management", "Employment Law"],
+        "projects": [
+            "Diversity & Inclusion Initiative (2024)",
+            "Remote Work Policy Development (2023)",
+            "Employee Wellness Program (2024)"
+        ],
+        "manager": "Robert Kim",
+        "location": "Austin",
+        "certifications": ["SHRM-CP", "Certified Professional in Learning and Performance"],
+        "training_completed": [
+            "Employment Law Updates (2024)",
+            "Conflict Resolution (2023)",
+            "Strategic HR Management (2024)"
+        ],
+        "last_promotion": "2023-03-20",
+        "notes": "Led successful diversity initiatives, reduced employee turnover by 40%"
+    },
+    {
+        "employee_id": "EMP006",
+        "name": "James Wilson",
+        "department": "Finance",
+        "position": "Financial Analyst",
+        "hire_date": "2023-05-08",
+        "salary": 70000,
+        "performance_rating": "Meets Expectations",
+        "skills": ["Excel", "Financial Modeling", "SQL", "Tableau", "Budget Analysis"],
+        "projects": [
+            "Quarterly Budget Analysis (2024)",
+            "Cost Reduction Initiative (2024)",
+            "Financial Dashboard Development (2024)"
+        ],
+        "manager": "Susan Lee",
+        "location": "Denver",
+        "certifications": ["CFA Level 1", "Excel Expert Certification"],
+        "training_completed": [
+            "Advanced Financial Modeling (2024)",
+            "Data Visualization with Tableau (2024)"
+        ],
+        "last_promotion": null,
+        "notes": "Strong analytical skills, detail-oriented, quick learner with financial modeling"
+    }
+]
