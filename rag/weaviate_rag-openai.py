@@ -2,12 +2,24 @@ import json
 from sentence_transformers import SentenceTransformer
 import weaviate
 from weaviate.classes.config import Configure
+from openai import OpenAI
+import os
 
 
 class WeaviateRAGDemo:
     def __init__(self):
         # Load embedding model
+        # Load embedding model
+        # Initialize the encoder model using SentenceTransformer.
+        # 'all-MiniLM-L6-v2' is a lightweight, efficient pre-trained model
+        # that converts text into embeddings (dense vector representations).
+        # This particular model is widely used because it balances speed and accuracy,
+        # making it well-suited for tasks like semantic search, clustering, and
+        # comparing the similarity between sentences or documents.
         self.encoder = SentenceTransformer('all-MiniLM-L6-v2')
+
+        # Initialize OpenAI client
+        self.openai_client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
 
         # Connect to local Weaviate v4 - Updated connection method
         self.client = weaviate.connect_to_local(
@@ -72,37 +84,85 @@ class WeaviateRAGDemo:
         return [r.properties for r in results.objects]
 
     def respond_without_rag(self, question: str) -> str:
-        return "I don't have access to specific employee details. Please contact HR or check the internal system."
+        """Generate response using only OpenAI without RAG context"""
+        try:
+            response = self.openai_client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=[
+                    {"role": "system",
+                     "content": "You are a helpful HR assistant. You don't have access to specific employee databases or records."},
+                    {"role": "user", "content": question}
+                ],
+                max_tokens=150,
+                temperature=0.7
+            )
+            return response.choices[0].message.content.strip()
+        except Exception as e:
+            return f"Error calling OpenAI: {str(e)}"
 
     def respond_with_rag(self, question: str) -> str:
-        results = self.search_employees(question, top_k=1)
-        if not results:
-            return "No relevant employee information found."
-        emp = results[0]
-        return f"{emp['name']} works in {emp['department']} as {emp['position']} and is skilled in {', '.join(emp['skills'][:3])}."
+        """Generate response using OpenAI with RAG context from Weaviate"""
+        try:
+            # Get only top 1 result to minimize context size and cost
+            results = self.search_employees(question, top_k=1)
+
+            if not results:
+                context = "No employee found."
+            else:
+                # Minimized context format to reduce token count
+                emp = results[0]
+                context = f"{emp['name']}: {emp['position']}, {emp['department']}, skills: {', '.join(emp['skills'][:3])}"  # Limit to top 3 skills
+
+            # Generate response with minimal context
+            response = self.openai_client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=[
+                    {"role": "system", "content": "HR assistant. Answer using provided employee data."},
+                    {"role": "user", "content": f"{context}\n\nQ: {question}"}  # Compact format
+                ],
+                max_tokens=80,  # Reduced from 250 to minimize cost
+                temperature=0.1,  # Very low for consistent, focused responses
+                top_p=0.8
+            )
+            return response.choices[0].message.content.strip()
+        except Exception as e:
+            return f"Error with RAG or OpenAI call: {str(e)}"
 
 
 def main():
     try:
+        # Check for OpenAI API key
+        if not os.getenv('OPENAI_API_KEY'):
+            print("Warning: OPENAI_API_KEY environment variable not set")
+            print("Set it with: export OPENAI_API_KEY='your-api-key-here'")
+            return
+
         rag = WeaviateRAGDemo()
         employees = rag.load_employee_data("employee_records.json")
         rag.create_employee_embeddings(employees)
 
+        # questions = [
+        #     "Who has Python and machine learning skills?",
+        #     "Find someone with sales experience",
+        #     "Who works in HR?",
+        #     "Do we have any finance analysts?"
+        # ]
+
         questions = [
-            "Who has Python and machine learning skills?",
-            "Find someone with sales experience",
-            "Who works in HR?",
-            "Do we have any finance analysts?"
+            "Who has Python and machine learning skills?"
         ]
 
         for q in questions:
-            print("\nQ:", q)
+            print(f"\n{'=' * 50}")
+            print(f"Q: {q}")
+            print(f"{'=' * 50}")
             print("Without RAG:", rag.respond_without_rag(q))
-            print("With RAG:", rag.respond_with_rag(q))
+            print("\nWith RAG:", rag.respond_with_rag(q))
 
     except Exception as e:
         print(f"Error: {e}")
         print("Make sure Weaviate is running locally on port 8080")
+        print("And that your OpenAI API key is set correctly")
     finally:
         # Ensure connection is closed
         if 'rag' in locals():
